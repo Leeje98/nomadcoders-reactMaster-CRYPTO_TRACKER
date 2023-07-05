@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Source+Sans+3:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800;900&display=swap');
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -55,6 +55,7 @@ table {
 }
 body {
   font-family: 'Source Sans 3', sans-serif;
+  font-weight: 600;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
 }
