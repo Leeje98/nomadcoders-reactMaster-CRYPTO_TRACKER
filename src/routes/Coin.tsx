@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route, useLocation, useParams } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useLocation,
+  useParams,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
 import styled from "styled-components";
 import Price from "./Price";
 import Chart from "./Chart";
@@ -44,6 +51,27 @@ const Loader = styled.div`
   text-align: center;
   display: block;
 `;
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 7px 0px;
+  border-radius: 10px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
+  }
+`;
 
 interface RouteParams {
   coinId: string;
@@ -87,7 +115,7 @@ interface PriceData {
     USD: {
       ath_date: string;
       ath_price: number;
-      market_cap: number
+      market_cap: number;
       market_cap_change_24h: number;
       percent_change_1h: number;
       percent_change_1y: number;
@@ -112,6 +140,9 @@ function Coin() {
   const { state } = useLocation<RouteState>();
   const [info, setInfo] = useState<InfoData>();
   const [priceInfo, setPriceInfo] = useState<PriceData>();
+  const priceMatch = useRouteMatch("/:coinId/price");
+  const chartMatch = useRouteMatch("/:coinId/chart");
+  // useRouteMatch : 입력한 경로에 위치한지 확인 / 아니면 null 반환
   useEffect(() => {
     (async () => {
       const infoData = await (
@@ -133,8 +164,9 @@ function Coin() {
           {state?.name ? state.name : loading ? "Loading..." : info?.name}
         </Title>
       </Header>
-      {loading ? <Loader>Loading...</Loader> 
-      : (
+      {loading ? (
+        <Loader>Loading...</Loader>
+      ) : (
         <>
           <Overview>
             <OverviewItem>
@@ -161,11 +193,23 @@ function Coin() {
               <span>{priceInfo?.max_supply}</span>
             </OverviewItem>
           </Overview>
+ 
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
+
           <Switch>
-            <Route path={`/${coinId}/price`}>
+            <Route path={`/:coinId/price`}>
+              {/* <Route path={`/${coinId}/price`}> */}
               <Price />
             </Route>
-            <Route path={`/${coinId}/chart`}>
+            <Route path={`/:coinId/chart`}>
+              {/* <Route path={`/${coinId}/chart`}> */}
               <Chart />
             </Route>
           </Switch>
