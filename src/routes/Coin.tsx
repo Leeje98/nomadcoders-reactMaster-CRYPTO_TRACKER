@@ -14,6 +14,7 @@ import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { useQuery } from "react-query";
 // import { Helmet } from "react-helmet";
 import { Helmet } from "react-helmet-async";
+import { IoIosArrowBack } from 'react-icons/io';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -21,13 +22,27 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 const Header = styled.header`
-  height: 10vh;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
+const ArrowBtn = styled(Link)`
+  position: absolute;
+  top: 38px;
+  left: 0;
+  height: 50px; 
+  color: ${(props) => props.theme.accentColor};
+  background-color: transparent;
+  box-shadow: none;
+  line-height: 30px;
+  font-size: 30px;
+`
 const Title = styled.h1`
-  font-size: 48px;
+  font-size: 40px;
+  line-height: 50px;
+  margin: 10px 0;
   color: ${(props) => props.theme.accentColor};
 `;
 const Overview = styled.div`
@@ -154,9 +169,9 @@ function Coin() {
     () => fetchCoinTickers(coinId),
     // Coins.tsx와 같이 함수명만 적지않고 함수로 넣은건 인자가 필요하기 때문에 
     // -> (api.tsx 함수에서 받을 인자를 넘겨줘야 된다는 뜻으로 추정)
-    {
-      refetchInterval: 10000,
-    }
+    // {
+    //   refetchInterval: 10000,
+    // }
     // 세번째 매개변수: 선택적으로 오브젝트를 넣을수 있다
     // 현재의 경우는 10초 간격으로 refetch값을 다시 불러온다(갱신한다)
   );
@@ -186,6 +201,9 @@ function Coin() {
         </title>
       </Helmet>
       <Header>
+        <ArrowBtn to={`/`}>
+          <IoIosArrowBack/>
+        </ArrowBtn>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
@@ -205,7 +223,7 @@ function Coin() {
             </OverviewItem>
             <OverviewItem>
               <span>Price:</span>
-              <span>${tickersData?.quotes.USD.price}</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
