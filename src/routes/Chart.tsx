@@ -33,6 +33,7 @@ function Chart({ coinId }: ChartProps) {
             {
               name: "price", 
               data: data?.map((price) => parseFloat(price.close)) ?? []
+                                                      // ?? [] : 데이터가 null이 되는 걸 방지하는 코드 - null 대신 빈 배열 반환
             },
           ]}
           options={{
@@ -57,7 +58,21 @@ function Chart({ coinId }: ChartProps) {
                 // axisBorder: { show: false },
                 axisTicks: { show: false },
                 labels: { show: false},
+                type: "datetime",
+                categories: data?.map((price) => 
+                    new Date(price.time_close * 1000).toISOString()
+                ),
             },
+            fill: { 
+                type: "gradient",
+                gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+                y: {
+                    formatter: (value) => `$ ${value.toFixed(2)}`
+                }
+            }
           }}
         />
       )}
