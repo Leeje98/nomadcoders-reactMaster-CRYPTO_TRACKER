@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet-async";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -84,6 +85,9 @@ function Coins() {                    // r data 타입
 
   return (
     <Container>
+      <Helmet>
+        <title>Home-Coin List</title>
+      </Helmet>
       <Header>
         <Title>코인</Title>
       </Header>

@@ -12,6 +12,8 @@ import Price from "./Price";
 import Chart from "./Chart";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { useQuery } from "react-query";
+// import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -149,9 +151,14 @@ function Coin() {
   const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
     // 원래 변수명 : 새로 정할 변수명 (변수명이 중복되면 안되기 때문에)
     ["tickers", coinId],
-    () => fetchCoinTickers(coinId)
+    () => fetchCoinTickers(coinId),
     // Coins.tsx와 같이 함수명만 적지않고 함수로 넣은건 인자가 필요하기 때문에 
     // -> (api.tsx 함수에서 받을 인자를 넘겨줘야 된다는 뜻으로 추정)
+    {
+      refetchInterval: 10000,
+    }
+    // 세번째 매개변수: 선택적으로 오브젝트를 넣을수 있다
+    // 현재의 경우는 10초 간격으로 refetch값을 다시 불러온다(갱신한다)
   );
   // const [loading, setLoading] = useState(true);
   // const [info, setInfo] = useState<InfoData>();
@@ -173,6 +180,11 @@ function Coin() {
   // 둘 중 하나라도 로딩 중이면 loading 변수는 true 상태이다
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -192,8 +204,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${tickersData?.quotes.USD.price}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
