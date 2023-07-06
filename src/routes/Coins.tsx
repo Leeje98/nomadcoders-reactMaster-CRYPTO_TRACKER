@@ -63,8 +63,13 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
+function Coins() {                    // r data 타입
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+                                          // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
+                                          // 두번째 매개변수의 fetcher함수 : api.ts에 정의
+      // isLoading : 하단의 loading useState를 대체함 (상태변화 감지/useQuery 기본기능)
+      // data : return하는 json 데이터를 담음
+
   // const [coins, setCoins] = useState<CoinInterface[]>([]);
   // const [loading, setLoading] = useState(true);
   // useEffect(() => {
