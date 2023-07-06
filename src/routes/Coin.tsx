@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import {
   Switch,
   Route,
@@ -224,7 +224,7 @@ function Coin() {
             </Route>
             <Route path={`/:coinId/chart`}>
               {/* <Route path={`/${coinId}/chart`}> */}
-              <Chart />
+              <Chart coinId={coinId}/>
             </Route>
           </Switch>
         </>
