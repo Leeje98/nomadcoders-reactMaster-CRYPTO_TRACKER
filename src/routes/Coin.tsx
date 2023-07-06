@@ -142,9 +142,17 @@ function Coin() {
   const priceMatch = useRouteMatch("/:coinId/price");
   const chartMatch = useRouteMatch("/:coinId/chart");
   // useRouteMatch : 입력한 경로에 위치한지 확인 / 아니면 null 반환
-  const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(["info", coinId], () => fetchCoinInfo(coinId))
-  const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(["tickers", coinId], () => fetchCoinTickers(coinId))
-       // 원래 변수명 : 새로 정할 변수명 (변수명이 중복되면 안되기 때문에)
+  const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(
+    ["info", coinId],
+    () => fetchCoinInfo(coinId)
+  );
+  const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
+    // 원래 변수명 : 새로 정할 변수명 (변수명이 중복되면 안되기 때문에)
+    ["tickers", coinId],
+    () => fetchCoinTickers(coinId)
+    // Coins.tsx와 같이 함수명만 적지않고 함수로 넣은건 인자가 필요하기 때문에 
+    // -> (api.tsx 함수에서 받을 인자를 넘겨줘야 된다는 뜻으로 추정)
+  );
   // const [loading, setLoading] = useState(true);
   // const [info, setInfo] = useState<InfoData>();
   // const [priceInfo, setPriceInfo] = useState<PriceData>();
@@ -162,7 +170,7 @@ function Coin() {
   //   })();
   // }, [coinId]);
   const loading = infoLoading || tickersLoading;
-
+  // 둘 중 하나라도 로딩 중이면 loading 변수는 true 상태이다
   return (
     <Container>
       <Header>
@@ -199,7 +207,7 @@ function Coin() {
               <span>{tickersData?.max_supply}</span>
             </OverviewItem>
           </Overview>
- 
+
           <Tabs>
             <Tab isActive={chartMatch !== null}>
               <Link to={`/${coinId}/chart`}>Chart</Link>
