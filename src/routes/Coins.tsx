@@ -66,10 +66,9 @@ interface ICoin {
 }
 
 interface ICoinsProps {
-  toggleDark: () => void;
 }
 
-function Coins({toggleDark}: ICoinsProps) {                    // r data 타입
+function Coins({}: ICoinsProps) {                    // r data 타입
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                           // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
                                           // 두번째 매개변수의 fetcher함수 : api.ts에 정의
@@ -95,7 +94,6 @@ function Coins({toggleDark}: ICoinsProps) {                    // r data 타입
       </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
