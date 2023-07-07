@@ -22,7 +22,7 @@ const CoinsList = styled.ul``;
 
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
@@ -65,7 +65,7 @@ interface ICoin {
 }
 
 function Coins() {                    // r data 타입
-  // const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                           // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
                                           // 두번째 매개변수의 fetcher함수 : api.ts에 정의
       // isLoading : 하단의 loading useState를 대체함 (상태변화 감지/useQuery 기본기능)
