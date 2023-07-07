@@ -21,10 +21,11 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: ${(props) => props.theme.cardBgColor};
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  border: 1px solid white;
   a {
     display: flex;
     align-items: center;
@@ -64,7 +65,11 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {                    // r data 타입
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({toggleDark}: ICoinsProps) {                    // r data 타입
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                           // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
                                           // 두번째 매개변수의 fetcher함수 : api.ts에 정의
@@ -90,6 +95,7 @@ function Coins() {                    // r data 타입
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
