@@ -70,7 +70,7 @@ interface ICoin {
 // interface ICoinsProps {}
 
 function Coins() {                  
-  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const setDarkAtom = useSetRecoilState(isDarkAtom); // useSetRecoilState:atom의 값을 변환함(useState와 같이 작동)
   const toggleDarkAtom = () => setDarkAtom((Mode) => !Mode)
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                       // ㄴ data 타입
