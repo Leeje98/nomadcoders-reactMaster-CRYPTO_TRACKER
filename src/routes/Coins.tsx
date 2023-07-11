@@ -6,6 +6,8 @@ import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet-async";
 import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./atoms";
+import { FaMoon } from 'react-icons/fa';
+import { BsSunFill } from 'react-icons/bs';
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -93,12 +95,15 @@ function Coins() {
 
   return (
     <Container>
+        {/* <button onClick={toggleDarkAtom}>
+          <BsSunFill />
+          <FaMoon />
+        </button> */}
       <Helmet>
         <title>Home-Coin List</title>
       </Helmet>
       <Header>
         <Title>코인</Title>
-        <button onClick={toggleDarkAtom}>toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

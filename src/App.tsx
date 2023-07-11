@@ -3,8 +3,11 @@ import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { HelmetProvider } from "react-helmet-async";
 import { darkTheme, lightTheme } from "./theme";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./routes/atoms";
+import { FaMoon } from 'react-icons/fa';
+import { BsSunFill } from 'react-icons/bs';
+import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800;900&display=swap');
@@ -71,14 +74,42 @@ a {
 }
 `;
 
+const DarkModeBtn = styled.button`
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px;
+  color: ${(props) => props.theme.accentColor}; 
+  font-size: 30px;
+  text-align: center;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: ${(props) => props.theme.cardBgColor};
+  cursor: pointer;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+`
+
 function App() { 
   const isDark = useRecoilValue(isDarkAtom)
+  const setDarkAtom = useSetRecoilState(isDarkAtom); // useSetRecoilState:atom의 값을 변환함(useState와 같이 작동)
+  const toggleDarkAtom = () => setDarkAtom((Mode) => !Mode)
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
         <HelmetProvider>
           <Router />
+          <DarkModeBtn onClick={toggleDarkAtom}>
+            { isDark ? 
+              <BsSunFill className="icon" /> :
+              <FaMoon className="icon" />
+            }
+          </DarkModeBtn>
         </HelmetProvider>
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>

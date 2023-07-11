@@ -47,10 +47,12 @@ const Title = styled.h1`
 `;
 const Overview = styled.div`
   display: flex;
-  justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
+  justify-content: space-around;
+  background-color: ${(props) => props.theme.cardBgColor};
+  box-shadow: rgba(10, 10, 10, 0.1) 0px 0.2rem 0.5rem;
+  padding: 10px 15px;
   border-radius: 10px;
+  margin-bottom: 15px;
 `;
 const OverviewItem = styled.div`
   display: flex;
@@ -79,17 +81,28 @@ const Tabs = styled.div`
 
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  text-transform: capitalize;
+  font-size: 18px;
+  font-weight: 500; 
   padding: 7px 0px;
   border-radius: 10px;
   color: ${(props) =>
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+    position: relative;
+    &::before {
+      content: "";
+      width: 30px;
+      height: 3px;
+      background-color: ${(props) => props.theme.accentColor};  
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
+  
 `;
 
 interface RouteParams {
@@ -228,7 +241,6 @@ function Coin() {
               <span>${tickersData?.quotes?.USD?.price?.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
-          <Description>{infoData?.description}</Description>
           <Overview>
             <OverviewItem>
               <span>Total Suply:</span>
@@ -239,24 +251,28 @@ function Coin() {
               <span>{tickersData?.max_supply}</span>
             </OverviewItem>
           </Overview>
+          <Overview>
+            <Description>{infoData?.description}</Description>
+          </Overview>
+
 
           <Tabs>
-            <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
-            </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
             </Tab>
           </Tabs>
 
           <Switch>
-            <Route path={`/:coinId/price`}>
-              {/* <Route path={`/${coinId}/price`}> */}
-              <Price />
-            </Route>
             <Route path={`/:coinId/chart`}>
               {/* <Route path={`/${coinId}/chart`}> */}
               <Chart coinId={coinId}/>
+            </Route>
+            <Route path={`/:coinId/price`}>
+              {/* <Route path={`/${coinId}/price`}> */}
+              <Price />
             </Route>
           </Switch>
         </>
