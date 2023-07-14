@@ -6,8 +6,7 @@ import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet-async";
 import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./atoms";
-import { FaMoon } from 'react-icons/fa';
-import { BsSunFill } from 'react-icons/bs';
+ 
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -71,8 +70,8 @@ interface ICoin {
 // interface ICoinsProps {}
 
 function Coins() {                  
-  const setDarkAtom = useSetRecoilState(isDarkAtom); // useSetRecoilState:atom의 값을 변환함(useState와 같이 작동)
-  const toggleDarkAtom = () => setDarkAtom((Mode) => !Mode)
+  // const setDarkAtom = useSetRecoilState(isDarkAtom); // useSetRecoilState:atom의 값을 변환함(useState와 같이 작동)
+  // const toggleDarkAtom = () => setDarkAtom((Mode) => !Mode)
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                       // ㄴ data 타입
                                           // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
@@ -112,7 +111,7 @@ function Coins() {
           {data?.slice(0, 100).map((coin) => ( 
               <Coin key={coin.id}>
                 <Link to={{
-                  pathname: `/${coin.id}`,
+                  pathname: `/${coin.id}/price`,
                   state: { name: coin.name }
                 }}>
                   <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} alt=""/>

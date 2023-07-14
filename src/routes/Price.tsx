@@ -22,6 +22,8 @@ const PriceView = styled.div`
 `;
 const FullPriceView = styled(PriceView)`
   width: 100%;
+  padding-top: 20px;
+ 
 `
 const PriceTitle = styled.p`
   font-style: 19px;
