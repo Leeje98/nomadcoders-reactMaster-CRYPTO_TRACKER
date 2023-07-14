@@ -10,7 +10,8 @@ import { BsSunFill } from 'react-icons/bs';
 import styled from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800;900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600;700;800;900&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -62,7 +63,8 @@ table {
   box-sizing: border-box;
 }
 body {
-  font-family: 'Source Sans 3', sans-serif;
+  /* font-family: 'Source Sans 3', sans-serif; */
+  font-family: 'Noto Sans', sans-serif;
   font-weight: 500;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};

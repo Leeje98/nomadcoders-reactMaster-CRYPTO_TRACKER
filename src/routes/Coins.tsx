@@ -29,11 +29,10 @@ const Coin = styled.li`
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
-  border: 1px solid white;
   a {
     display: flex;
     align-items: center;
-    padding: 20px;
+    padding: 17px;
     transition: color 0.2s ease-in;
   }
   &:hover {
@@ -54,8 +53,8 @@ const Loader = styled.div`
 `;
 
 const Img = styled.img`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   margin-right: 10px;
 `;
 
@@ -92,7 +91,8 @@ function Coins() {
   //   })();
   // }, []);
   // console.log(coins);
-
+  console.log(data);
+  
   return (
     <Container>
         {/* <button onClick={toggleDarkAtom}>
@@ -109,17 +109,17 @@ function Coins() {
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {data?.slice(0, 100).map((coin) => (
-            <Coin key={coin.id}>
-              <Link to={{
-                pathname: `/${coin.id}`,
-                state: { name: coin.name }
-              }}>
-                <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} alt=""/>
-                {coin.name} &rarr;
-              </Link>
-            </Coin>
-          ))}
+          {data?.slice(0, 100).map((coin) => ( 
+              <Coin key={coin.id}>
+                <Link to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name }
+                }}>
+                  <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} alt=""/>
+                  {coin.name} &rarr;
+                </Link>
+              </Coin>
+          ))} 
         </CoinsList>
       )}
     </Container>

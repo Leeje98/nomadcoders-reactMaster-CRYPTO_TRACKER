@@ -10,6 +10,7 @@ function Router() {
     <BrowserRouter>
       <Switch>
         <Route path="/:coinId">
+        {/* <Route path={`/:coinId/price`} > */}
           <Coin />
         </Route>
         <Route path="/">

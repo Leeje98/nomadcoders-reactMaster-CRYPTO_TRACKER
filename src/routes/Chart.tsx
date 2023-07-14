@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchCoinHistory } from "../api";
+import { fetchCoinTickers } from "../api";
 import { useQuery } from "react-query";
 import ApexChart from "react-apexcharts";
 // import { trace } from "console";
@@ -24,7 +24,7 @@ function Chart({ coinId }: ChartProps) {
   const isDark = useRecoilValue(isDarkAtom)  // useRecoilValue:atom의 값을 불러옴
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId], 
-    () => fetchCoinHistory(coinId),
+    () => fetchCoinTickers(coinId),
     // {
     //     refetchInterval: 10000,
     // }

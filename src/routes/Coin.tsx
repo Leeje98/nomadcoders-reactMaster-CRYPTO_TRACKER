@@ -50,7 +50,7 @@ const Overview = styled.div`
   justify-content: space-around;
   background-color: ${(props) => props.theme.cardBgColor};
   box-shadow: rgba(10, 10, 10, 0.1) 0px 0.2rem 0.5rem;
-  padding: 10px 15px;
+  padding: 10px 16px;
   border-radius: 10px;
   margin-bottom: 15px;
 `;
@@ -82,12 +82,11 @@ const Tabs = styled.div`
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: capitalize;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500; 
   padding: 7px 0px;
   border-radius: 10px;
-  color: ${(props) =>
-    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  color: ${(props) => props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
     position: relative;
@@ -95,7 +94,7 @@ const Tab = styled.span<{ isActive: boolean }>`
       content: "";
       width: 30px;
       height: 3px;
-      background-color: ${(props) => props.theme.accentColor};  
+      background-color: ${(props) => props.isActive ? props.theme.accentColor : props.theme.textColor}; 
       position: absolute;
       bottom: -10px;
       left: 50%;
@@ -266,13 +265,13 @@ function Coin() {
           </Tabs>
 
           <Switch>
+            {/* <Route path={`/:coinId/price`} exact={true}> */}
+            <Route path={`/${coinId}/price`}>
+              <Price coinId={coinId}/>
+            </Route>
             <Route path={`/:coinId/chart`}>
               {/* <Route path={`/${coinId}/chart`}> */}
               <Chart coinId={coinId}/>
-            </Route>
-            <Route path={`/:coinId/price`}>
-              {/* <Route path={`/${coinId}/price`}> */}
-              <Price />
             </Route>
           </Switch>
         </>
