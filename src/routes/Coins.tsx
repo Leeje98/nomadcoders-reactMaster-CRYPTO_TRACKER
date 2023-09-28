@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet-async";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atoms";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -65,10 +67,13 @@ interface ICoin {
   type: string;
 }
 
-interface ICoinsProps {
-}
+// interface ICoinsProps {
+// }
 
-function Coins({}: ICoinsProps) {                    // r data 타입
+function Coins() {         
+  const setDarkAtom = useSetRecoilState(isDarkAtom);
+  const toggleDarkAtom = setDarkAtom((mode) => !mode);
+                                                   // r data 타입
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
                                           // 첫번째 매개변수는 query의 고유 식별자, 두번째 매개변수는 fetcher함수 
                                           // 두번째 매개변수의 fetcher함수 : api.ts에 정의
@@ -94,6 +99,7 @@ function Coins({}: ICoinsProps) {                    // r data 타입
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={() => toggleDarkAtom}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
